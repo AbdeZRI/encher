@@ -32,7 +32,6 @@ class Products
     public function display()
     {
         echo "<div class='product'>";
-        echo "<h2>Votre annonce </h2>";
         echo "<h3>" . $this->title . "</h3>";
         echo "<p><strong>Marque :</strong> " . $this->marque . "</p>";
         echo "<p><strong>Modele :</strong> " . $this->modele . "</p>";

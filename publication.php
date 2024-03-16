@@ -71,7 +71,7 @@
         && isset($_POST["dateFin"])
         && isset($_POST["dateDebut"]));
     {
-        //nettoyage des inputs
+        //Récupération et nettoyage des inputs
         $title = filter_var($_POST["title"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $marque = filter_var($_POST["marque"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $modele = filter_var($_POST["modele"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -88,16 +88,23 @@
         $product->display();
     } 
     
-    
-    
-     
+    try {
+        //Connexion à la BDD
+        $pdo = new PDO('mysql:host=localhost;dbname=enchere_sql', 'root', '');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+        //Insertion des POST dans la BDD
+        $query = 'INSERT INTO voiture (modele_voiture, marque_voiture, puissance_voiture, annee_voiture, description, prix_depart) VALUES (?, ?, ?, ?, ?, ?)';
+        $stmt = $pdo->prepare($query);
 
+        //Execution de l'insertion
+        $stmt->execute([$modele, $marque, $puissance, $annee, $description, $prixDepart]);
 
+        echo "Vous avez bien publié votre annonce";
+    } catch (PDOException $e) {
+        echo "Erreur : " . $e->getMessage();
+    }
 
-   
-    
-    
     ?>
 
 
