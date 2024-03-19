@@ -60,6 +60,13 @@
 
     <?php 
     
+
+    $pdo = new PDO('mysql:host=localhost;dbname=enchere_sql', 'root', '');
+
+
+    var_dump($_SESSION['user_id']);
+
+    
     if ($_SESSION['user_id']) {
         if (isset($_POST["title"])
             && isset($_POST["marque"])
@@ -70,6 +77,8 @@
             && isset($_POST["prixDepart"])
             && isset($_POST["dateFin"])
             && isset($_POST["dateDebut"]));
+
+            
         {
             //Récupération et nettoyage des inputs
             $title = filter_var($_POST["title"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -81,6 +90,8 @@
             $prixDepart = filter_var($_POST["prixDepart"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $dateFin = filter_var($_POST["dateFin"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $dateDebut = filter_var($_POST["dateDebut"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            
+            $sessionUser = $_SESSION['user_id'];
             
             $product = new Products($title, $marque, $modele, $puissance, $annee, $description, $prixDepart, $dateFin, $dateDebut);
 
@@ -94,20 +105,27 @@
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             //Insertion des POST dans la BDD
-            $query = 'INSERT INTO voiture (modele_voiture, marque_voiture, puissance_voiture, annee_voiture, description, prix_depart) VALUES (?, ?, ?, ?, ?, ?)';
+            $query = 'INSERT INTO voiture (id_utilisateur, modele_voiture, marque_voiture, puissance_voiture, annee_voiture, description, date_fin, prix_depart) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
             $stmt = $pdo->prepare($query);
 
-            
-
             //Execution de l'insertion 
-            $stmt->execute([$modele, $marque, $puissance, $annee, $description, $prixDepart]);
+            $stmt->execute([$sessionUser, $modele, $marque, $puissance, $annee, $description, $dateFin, $prixDepart]);
+
+            $stmt2 = $pdo->query('SELECT * FROM voiture ORDER BY ref_voiture DESC');
+            $row = $stmt2->fetch(PDO::FETCH_ASSOC);
+            $refVoiture = $row['ref_voiture'];
+
+            $query = 'INSERT INTO encheres (ref_voiture, id_utilisateur, prix_enchere) VALUES (?, ?, ?)';
+            $stmt2 = $pdo->prepare($query);
+
+            $stmt2->execute([$refVoiture, $sessionUser, $prixDepart]);
 
             echo "Vous avez bien publié votre annonce";
         } catch (PDOException $e) {
             echo "Erreur : " . $e->getMessage();
         }
     } else {
-        echo "Vous devez être connecté pour publier une annonce";
+         echo "Vous devez être connecté pour publier une annonce";
     }
     ?>
 

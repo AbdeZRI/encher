@@ -1,4 +1,7 @@
-<?PHP session_start() ?>
+<?PHP session_start() 
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,21 +12,12 @@
     </head>
     <body>
 
-    <button id="logout">Déconnexion</button>
 
-    <script> let button = document.querySelector('#btnDeco');
-
-    button.addEventListener("click", function() {
-        <?php session_destroy(); ?>
-        
-    });
-
-</script>
-        
         <div class="containerEnchere">
 
     <?php 
-    // var_dump($_SESSION['user_id']);
+
+    var_dump($_SESSION['user_id']);
 
     
     //connexion à la BDD

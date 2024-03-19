@@ -1,6 +1,5 @@
 <?php 
 
-
 //Creation de l'object Product
 class Products
 {
@@ -46,19 +45,6 @@ class Products
     } 
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ?>
 

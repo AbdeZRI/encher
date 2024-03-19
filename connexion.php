@@ -1,6 +1,7 @@
 <?php
 session_start(); // Démarre la session
 
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Récupération des données du formulaire
     $email = $_POST['email_utilisateur'];
@@ -20,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($user) { // Si l'utilisateur existe
             if (password_verify($mdp, $user['mdp_utilisateur'])) { // Vérifie le mot de passe
                 $_SESSION['user_id'] = $user['id_utilisateur']; // Stocke l'ID de l'utilisateur dans la session
+                
                 header('Location: index.php'); // Redirige vers la page index.php
                 exit();
             } else {
@@ -32,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Erreur : " . $e->getMessage();
     }
 
-    var_dump($user);
+    
 }
 ?>
 
