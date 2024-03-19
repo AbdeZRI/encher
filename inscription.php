@@ -37,6 +37,7 @@
             <li>
                 <input type="submit" value="Envoyer" />
             </li>
+            <a href="./connexion.php">Se connecter</a>
         </ul>
     </form>
 

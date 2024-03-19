@@ -1,0 +1,14 @@
+.product {
+  background-color: rgba(128, 128, 128, 0.316);
+  text-align: center;
+  width: 50%;
+  border-radius: 50px;
+  margin: 0 auto;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.product li,
+.product button {
+  list-style-type: none;
+  padding: 10px;
+}
