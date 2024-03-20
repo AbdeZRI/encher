@@ -44,27 +44,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
-    <form class="formContainer" action="connexion.php" method="POST">
-        <h1>Connexion</h1>
+    <form class="container" action="connexion.php" method="POST">
+        <div class="brand-logo"></div>
+        <div class="brand-title">Connexion</div>
         <?php if (isset($error_message)) : ?>
             <p><?php echo $error_message; ?></p>
         <?php endif; ?>
-        <ul>
-            <li>
-                <label for="email">Email :</label>
-                <input type="email" id="email" name="email_utilisateur" required />
-            </li>
-            <li>
-                <label for="mdp">Mot de passe :</label>
-                <input type="password" id="mdp" name="mdp_utilisateur" required />
-            </li>
-            <li>
-                <input type="submit" value="Se connecter" />
-            </li>
-            <a href="./inscription.php">S'inscrire</a>
-        </ul>
+        <div class="inputs">
+            <label for="email">EMAIL</label>
+            <input type="email" id="email" name="email_utilisateur" required />
+            <label for="mdp">MOT DE PASSE</label>
+            <input type="password" id="mdp" name="mdp_utilisateur" required />
+            <button type="submit">SE CONNECTER</button>
+        </div>
     </form>
-
 
 </body>
 

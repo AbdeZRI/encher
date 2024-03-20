@@ -22,6 +22,7 @@
             <input type="text" id="titleAnnonce" name="title" required><br><br>
         </div>
         <div>
+
             <label for="marque">Marque :</label>
             <input type="text" id="marque" name="marque_voiture" required><br><br>
         </div>
@@ -86,29 +87,28 @@
                 $prixDepart = filter_var($_POST["prix_depart"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 $dateFin = filter_var($_POST["date_fin"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 // $dateDebut = filter_var($_POST["dateDebut"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            }
+            try {
+                // Connexion à la base de données
+                $pdo = new PDO('mysql:host=localhost;dbname=enchere_sql', 'root', 'root');
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                try {
-                    // Connexion à la base de données
-                    $pdo = new PDO('mysql:host=localhost;dbname=enchere_sql', 'root', 'root');
-                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                // Insertion des données dans la base de données
+                $query = 'INSERT INTO Voiture (id_utilisateur, modele_voiture, marque_voiture, puissance_voiture, annee_voiture, description, date_fin, prix_depart) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+                $stmt = $pdo->prepare($query);
 
-                    // Insertion des données dans la base de données
-                    $query = 'INSERT INTO Voiture (id_utilisateur, modele_voiture, marque_voiture, puissance_voiture, annee_voiture, description, date_fin, prix_depart) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-                    $stmt = $pdo->prepare($query);
+                // Exécution de l'insertion
+                $stmt->execute([$sessionUser, $modele, $marque, $puissance, $annee, $description, $dateFin, $prixDepart]);
 
-                    // Exécution de l'insertion
-                    $stmt->execute([$sessionUser, $modele, $marque, $puissance, $annee, $description, $dateFin, $prixDepart]);
-
-                    echo "Vous avez bien publié votre annonce";
-                } catch (PDOException $e) {
-                    echo "Erreur : " . $e->getMessage();
-                }
-            } else {
-                echo "Veuillez remplir tous les champs du formulaire.";
+                echo "Vous avez bien publié votre annonce";
+            } catch (PDOException $e) {
+                echo "Erreur : " . $e->getMessage();
             }
         } else {
-            echo "Vous devez être connecté pour publier une annonce";
+            echo "Veuillez remplir tous les champs du formulaire.";
         }
+    } else {
+        echo "Vous devez être connecté pour publier une annonce";
     }
     ?>
 
