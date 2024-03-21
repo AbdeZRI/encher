@@ -49,6 +49,9 @@
                 <label for="dateFin">Date de fin de l'enchère :</label>
                 <input type="date" id="dateFin" name="date_fin" value="<?= date("Y-m-d") ?>" min="2020-01-01" max="2030-12-31" required><br><br>
 
+                <label for="image">Image : </label>
+                <input type="file" id="image" name="file">
+
                 <label for="Description">Description : </label>
                 <textarea id="description" name="description" placeholder="Décrivez précisément votre bien, en indiquant son état, ses caractéristiques, ainsi que toute autre information importante pour l'acquéreur."></textarea><br><br>
             </div>
@@ -79,6 +82,11 @@
                 $description = filter_var($_POST["description"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 $prixDepart = filter_var($_POST["prix_depart"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 $dateFin = filter_var($_POST["date_fin"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $image_name = $_FILES['file']['name'];
+                $image_tmp_name = $_FILES['file']['tmp_name'];
+
+                $product= new Product ($title,$marque,$modele,$puissance,$annee,$description,$prixDepart,$dateFin,$dateDebut, $image_name);
+
 
                 try {
                     // Connexion à la base de données
