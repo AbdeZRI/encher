@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Détails annonce</title>
     </head>
-    <body>
+    <body> <?php require_once './Product.php' ?>
         <?php if (isset($_GET['ref_voiture']) && !empty($_GET['ref_voiture'])) {
         // Récupérez l'identifiant de l'annonce depuis l'URL
         $annonce_id = $_GET['ref_voiture'];
@@ -19,8 +19,12 @@
             $query = "SELECT * FROM voiture WHERE ref_voiture = ?";
             $stmt = $pdo->prepare($query);
 
+            
+
+
             // Exécutez la requête avec l'identifiant de l'annonce
             $stmt->execute([$annonce_id]);
+            
 
             // Vérifiez si une annonce correspondante a été trouvée
             if ($stmt->rowCount() > 0) {
@@ -31,8 +35,19 @@
                 echo "<h1>Détails de l'annonce</h1>";
                 echo "<p><strong>Marque :</strong> " . htmlspecialchars($annonce['marque_voiture']) . "</p>";
                 echo "<p><strong>Modèle :</strong> " . htmlspecialchars($annonce['modele_voiture']) . "</p>";
-                echo "<p><strong>Marque :</strong> " . htmlspecialchars($annonce['puissance_voiture']) . "</p>";
+                echo "<p><strong>Puissance :</strong> " . htmlspecialchars($annonce['puissance_voiture']) . "</p>";
                 echo "<p><strong>Année :</strong> " . htmlspecialchars($annonce['annee_voiture']) . "</p>";
+                echo "<p><strong>Déscription :</strong> " . htmlspecialchars($annonce['description']) . "</p>";
+                echo "<p><strong>Date de fin :</strong> " . htmlspecialchars($annonce['date_fin']) . "</p>";
+                echo "<p><strong>Prix de départ :</strong> " . htmlspecialchars($annonce['prix_depart']) . "€</p>";
+                echo "<form method='POST' action='pageDetail.php?ref_voiture=" . $annonce['ref_voiture'] . "'>";
+                echo "<input name='enchere' type='number'/>";
+                echo "<button type='submit'>Enchérir</button>";
+                echo "</form>";
+
+                $product = new Products($annonce['marque_voiture'], $annonce['modele_voiture'], $annonce['puissance_voiture'], $annonce['annee_voiture'], $annonce['description'], $annonce['prix_depart'], $annonce['date_fin'], 2024/02/21);
+
+
                 // Affichez d'autres détails de l'annonce de la même manière
             } else {
                 echo "Aucune annonce trouvée avec cet identifiant.";

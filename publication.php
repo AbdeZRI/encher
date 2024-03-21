@@ -24,15 +24,15 @@
             </div>
              <div>
                 <label for="puissance">Puissance :</label>
-                <input type="text" id="puissance" name="puissance" required><br><br>
+                <input type="number" id="puissance" name="puissance" required><br><br>
             </div>
             <div>
                 <label for="annee">Année : </label>
-                <input type="text" id="annee" name="annee" required><br><br>
+                <input type="number" id="annee" name="annee" required><br><br>
             </div>
             <div>
                 <label for="PrixDepart">Prix de départ de l'enchére :</label>
-                <input type="text" id="prixDepart" name="prixDepart" required><br><br>
+                <input type="number" id="prixDepart" name="prixDepart" required><br><br>
             </div>
             <div>
                 <label for="dateFin">Date de fin de l'enchère :</label>
@@ -48,6 +48,10 @@
                 <label for="Description">Déscription : </label>
                 <textarea id="description" name="description" placeholder="Décrivez précisement votre bien, en indiquant son état, ses caractéristiques, ainsi que toute autre informations importante pour l'acquéreur." ></textarea><br><br>
             </div>
+            <div>
+                <label for="image">Image :</label>
+                <input type="file" id="image" name="file">
+            </div>
             <input type="submit" value="Publier">
         </div>
 
@@ -62,7 +66,9 @@
 
     var_dump($_SESSION['user_id']);
 
-    
+    $image_name = $_FILES['file']['name'];
+    $image_tmp_name = $_FILES['file']['tmp_name'];
+
     if ($_SESSION['user_id']) {
         if (isset($_POST["marque"])
             && isset($_POST["modele"])
@@ -85,10 +91,10 @@
             $prixDepart = filter_var($_POST["prixDepart"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $dateFin = filter_var($_POST["dateFin"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $dateDebut = filter_var($_POST["dateDebut"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            
+           
             $sessionUser = $_SESSION['user_id'];
             
-            $product = new Products($marque, $modele, $puissance, $annee, $description, $prixDepart, $dateFin, $dateDebut);
+            $product = new Products($marque, $modele, $puissance, $annee, $description, $prixDepart, $dateFin, $dateDebut, $image_name);
 
 
             // affichage de la publication avec la fonction display
@@ -101,11 +107,26 @@
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             //Insertion des POST dans la BDD
-            $query = 'INSERT INTO voiture (id_utilisateur, modele_voiture, marque_voiture, puissance_voiture, annee_voiture, description, date_fin, prix_depart) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+            $query = 'INSERT INTO voiture (id_utilisateur, modele_voiture, marque_voiture, puissance_voiture, annee_voiture, description, date_fin, prix_depart, image_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
             $stmt = $pdo->prepare($query);
 
+            // Traitement de l'upload de l'image
+            if (isset($_FILES["file"]["tmp_name"])) {
+                $destination_path = "upload/" . $_FILES["file"]['name'];
+                $uploaded_file = $_FILES["file"]['tmp_name'];
+                if (move_uploaded_file($uploaded_file, $destination_path)) {
+                    echo "File uploaded successfully!";
+                    // Insérer les détails de l'image dans la base de données
+                    $stmt->execute([$sessionUser, $modele, $marque, $puissance, $annee, $description, $dateFin, $prixDepart, $image_name]);
+                  
+                    echo "Vous avez bien publié votre annonce";
+            } else {
+                    echo "Error uploading file";
+                }
+            }
+
             //Execution de l'insertion 
-            $stmt->execute([$sessionUser, $modele, $marque, $puissance, $annee, $description, $dateFin, $prixDepart]);
+            // $stmt->execute([$sessionUser, $modele, $marque, $puissance, $annee, $description, $dateFin, $prixDepart]);
 
             $stmt2 = $pdo->query('SELECT * FROM voiture ORDER BY ref_voiture DESC');
             $row = $stmt2->fetch(PDO::FETCH_ASSOC);
@@ -115,8 +136,13 @@
             $stmt2 = $pdo->prepare($query);
 
             $stmt2->execute([$refVoiture, $sessionUser, $prixDepart]);
-
             echo "Vous avez bien publié votre annonce";
+            $stmt = $pdo->query('SELECT * FROM Voiture ORDER BY ref_voiture DESC');
+            $row = $stmt->fetch (PDO::FETCH_ASSOC);
+            $voitureId = $row["ref_voiture"];
+            $stmt = $pdo->prepare($query);
+            
+            
         } catch (PDOException $e) {
             echo "Erreur : " . $e->getMessage();
         }

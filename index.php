@@ -76,16 +76,7 @@
     echo "</div>";
     //  echo "<p><strong>Prix date de début :</strong> " . htmlspecialchars($row['date_debut']) . "€ </p>";
     
-    // if (isset($_POST['details'])) {
-        
-    //     $stmt2 = $pdo->query('SELECT * FROM voiture WHERE ref_voiture');
-    //       while  ($row = $stmt2->fetch(PDO::FETCH_ASSOC)) {
-    //         $refVoiture = $row['ref_voiture'];
-             
-    //     }
-        
-    //     exit;
-    // };
+   
 }
     
 } catch (PDOException $e) {
