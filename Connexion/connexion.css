@@ -21,7 +21,7 @@ body {
 .container {
   position: relative;
   width: 350px;
-  height: 500px;
+  height: 560px;
   border-radius: 20px;
   padding: 40px;
   box-sizing: border-box;
@@ -32,7 +32,10 @@ body {
 .brand-logo {
   height: 100px;
   width: 100px;
-  background: url("https://img.icons8.com/color/100/000000/twitter--v2.png");
+  background: url("https://cdn-icons-png.flaticon.com/256/2554/2554896.png");
+  background-size: 90px;
+  background-repeat: no-repeat;
+  background-position: 9px;
   margin: auto;
   border-radius: 50%;
   box-sizing: border-box;
@@ -87,7 +90,7 @@ input {
 
 button {
   color: white;
-  margin-top: 20px;
+  margin-top: 30px;
   background: #1da1f2;
   height: 40px;
   border-radius: 20px;
@@ -103,9 +106,9 @@ button:hover {
 
 a {
   position: absolute;
-  font-size: 8px;
-  bottom: 4px;
-  right: 4px;
+  font-size: 12px;
+  bottom: 10px;
+  right: 20%;
   text-decoration: none;
   color: black;
   background: yellow;

@@ -1,6 +1,8 @@
 <?php
 session_start(); // Démarre la session
 
+$error_message = ''; // Initialise le message d'erreur
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Récupération des données du formulaire
     $email = $_POST['email_utilisateur'];
@@ -20,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($user) { // Si l'utilisateur existe
             if (password_verify($mdp, $user['mdp_utilisateur'])) { // Vérifie le mot de passe
                 $_SESSION['user_id'] = $user['id_utilisateur']; // Stocke l'ID de l'utilisateur dans la session
-                header('Location: index.php'); // Redirige vers la page index.php
+                header('Location: ../Accueil/index.php'); // Redirige vers la page index.php
                 exit();
             } else {
                 $error_message = "Mot de passe incorrect";
@@ -44,10 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
-    <form class="container" action="connexion.php" method="POST">
+    <form class="container" action="connexion.php" method="POST"> <!-- Modifier l'action pour pointer vers connexion.php -->
         <div class="brand-logo"></div>
         <div class="brand-title">Connexion</div>
-        <?php if (isset($error_message)) : ?>
+        <?php if ($error_message != '') : ?> <!-- Modifier la condition pour vérifier si $error_message n'est pas vide -->
             <p><?php echo $error_message; ?></p>
         <?php endif; ?>
         <div class="inputs">
@@ -56,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <label for="mdp">MOT DE PASSE</label>
             <input type="password" id="mdp" name="mdp_utilisateur" required />
             <button type="submit">SE CONNECTER</button>
+            <a href="../Inscription/inscription.php">Pas encore de compte ? S'inscrire</a>
         </div>
     </form>
 

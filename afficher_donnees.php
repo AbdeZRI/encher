@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <a href="./index.php">Retour à l'accueil</a>
+    <a href="./Accueil/index.php">Retour à l'accueil</a>
 
     <h2>Détails de l'annonce</h2>
 

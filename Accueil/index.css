@@ -1,3 +1,17 @@
+body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #ecf0f3;
+}
+
+#deconnexion {
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
 .product {
   background-color: rgba(128, 128, 128, 0.316);
   text-align: center;
@@ -11,4 +25,12 @@
 .product button {
   list-style-type: none;
   padding: 10px;
+}
+
+.navContainer {
+  background: aliceblue;
+  width: 100vw;
+  height: 90px;
+  position: fixed;
+  top: 0;
 }
