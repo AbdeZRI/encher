@@ -1,0 +1,30 @@
+
+body {
+    display: flex;
+    
+
+}
+
+ul {
+border: solid 5px red
+
+}
+
+.product {
+    background-color: rgba(17, 36, 210, 0.769);
+    text-align: center;
+    width: 50%;
+    border-radius: 100px;
+    margin: 0 auto;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border: solid 5px black;
+    
+}
+  
+.product li,
+.product button {
+    list-style-type: none;
+    padding: 15px;
+}
+  
+/*  */
