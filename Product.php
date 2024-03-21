@@ -3,20 +3,20 @@
 //Creation de l'object Product
 class Products
 {
-    public string $title;
-    public string $marque;
-    public string $modele;
-    public int $puissance;
-    public int $annee;
-    public string $description;
-    public float $prixDepart;
-    public $dateFin ;
-    public $dateDebut;
+    
+    protected string $marque;
+    protected string $modele;
+    protected int $puissance;
+    protected int $annee;
+    protected string $description;
+    protected float $prixDepart;
+    protected $dateFin ;
+    protected $dateDebut;
 
     //creation de la function constructeur
-    public function __construct($title, $marque, $modele, $puissance, $annee, $description, $prixDepart, $dateFin, $dateDebut)
+    public function __construct($marque, $modele, $puissance, $annee, $description, $prixDepart, $dateFin, $dateDebut)
     {
-        $this->title = $title;
+       
         $this->marque = $marque;
         $this->modele = $modele;
         $this->puissance = $puissance;
@@ -27,11 +27,13 @@ class Products
         $this->dateDebut = $dateDebut;
     }
 
+   
+
     // creation de la function pour afficher les elements de Product
     public function display()
     {
         echo "<div class='product'>";
-        echo "<h3>" . $this->title . "</h3>";
+        echo "<h3>Annonce</h3>";
         echo "<p><strong>Marque :</strong> " . $this->marque . "</p>";
         echo "<p><strong>Modele :</strong> " . $this->modele . "</p>";
         echo "<p><strong>Puissance :</strong> " . $this->puissance . " </p>";

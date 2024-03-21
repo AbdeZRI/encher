@@ -15,10 +15,6 @@
     <form action="publication.php" method="POST">
         <div>
             <div>
-                <label for="title">Titre de votre annonce :</label>
-                <input type="text" id="titleAnnonce" name="title" required><br><br>
-            </div>
-            <div>
                 <label for="marque">Marque :</label>
                 <input type="text" id="marque" name="marque" required><br><br>
             </div>
@@ -40,13 +36,13 @@
             </div>
             <div>
                 <label for="dateFin">Date de fin de l'enchère :</label>
-                <input type="date" id="dateFin" name="dateFin" value="<?= date ("Y-m-d") ?>"
+                <input type="date" id="dateFin" name="dateFin" value="<?= date ("d-m-Y") ?>"
                     min="2020-01-01" max="2030-12-31" required><br><br>
             </div>
             <div>
                 <label for="dateDebut">Date de fin de l'enchère :</label>
-                <input type="date" id="dateDebut" name="dateDebut" value="<?= date ("Y-m-d") ?>"
-                    min="2020-01-01" max="2030-12-31" required><br><br>
+                <input type="date" id="dateDebut" name="dateDebut" value="<?= date ("d-m-Y") ?>"
+                    min="2024-03-20" max="2030-12-31" required><br><br>
             </div>
             <div>
                 <label for="Description">Déscription : </label>
@@ -68,20 +64,19 @@
 
     
     if ($_SESSION['user_id']) {
-        if (isset($_POST["title"])
-            && isset($_POST["marque"])
+        if (isset($_POST["marque"])
             && isset($_POST["modele"])
             && isset($_POST["puissance"])
             && isset($_POST["annee"])
             && isset($_POST["description"])
             && isset($_POST["prixDepart"])
             && isset($_POST["dateFin"])
-            && isset($_POST["dateDebut"]));
+            && isset($_POST["dateDebut"])); 
+            
 
             
         {
             //Récupération et nettoyage des inputs
-            $title = filter_var($_POST["title"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $marque = filter_var($_POST["marque"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $modele = filter_var($_POST["modele"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $puissance = filter_var($_POST["puissance"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -93,7 +88,8 @@
             
             $sessionUser = $_SESSION['user_id'];
             
-            $product = new Products($title, $marque, $modele, $puissance, $annee, $description, $prixDepart, $dateFin, $dateDebut);
+            $product = new Products($marque, $modele, $puissance, $annee, $description, $prixDepart, $dateFin, $dateDebut);
+
 
             // affichage de la publication avec la fonction display
             $product->display();

@@ -2,19 +2,33 @@
 
 class Utilisateur 
 {
-    public $id;
-    public $nom;
-    public $prenom;
-    public $email;
+    private $sessionUser;
+    private $nom;
+    private $prenom;
+    private $email;
 
     public function __construct($id, $nom, $prenom, $email) 
     {
-        $this->id ;
+        $this->sessionUser ;
         $this->$nom;
         $this->$prenom;
         $this->$email;
 
     }
+
+    public function getSessionUser() {
+        return $this->sessionUser;
+    }
+    public function getNom() {
+        return $this->nom;
+    }
+    public function getPrenom() {
+        return $this->prenom;
+    }
+    public function getEmail() {
+        return $this->email;
+    }
+   
 
     public function display()  
     {

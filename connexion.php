@@ -44,10 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
+    <link rel="stylesheet" href="connexion.css">
 </head>
 
 <body>
-    <form class="formContainer" action="connexion.php" method="POST">
+<form class="formContainer" action="connexion.php" method="POST">
         <h1>Connexion</h1>
         <?php if (isset($error_message)) : ?>
             <p><?php echo $error_message; ?></p>
